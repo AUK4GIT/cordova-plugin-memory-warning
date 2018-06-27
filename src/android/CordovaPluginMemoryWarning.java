@@ -15,6 +15,7 @@ import android.app.ActivityManager.MemoryInfo;
 import android.os.Build;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 
 public class CordovaPluginMemoryWarning extends CordovaPlugin {
 
@@ -55,8 +56,44 @@ public class CordovaPluginMemoryWarning extends CordovaPlugin {
                     }
                 }
             });
+            return true;
         }
-
-        return true;
+        if (action.equals("getUsableSpace")) {
+			this.getByteFreeExternalPath(callbackContext);
+			return true;
+		} 
+        return false;
     }
+    
+    private void getByteFreeExternalPath(CallbackContext callBackContext) {
+		ExternalStorage externalstorage = new ExternalStorage();
+        
+		try {
+            long spaceFreeByte = 0;
+
+		this.checkMounted();
+		spaceFreeByte = Environment.getExternalStorageDirectory()
+				.getFreeSpace();
+
+			callBackContext.success(String.valueOf(spaceFreeByte));
+		} catch (Exception e) {
+			e.printStackTrace();
+			callBackContext.error(e.getMessage());
+		}
+	}
+    
+    private boolean checkMounted() throws Exception {
+		String state = "";
+
+		try {
+			state = Environment.getExternalStorageState();
+			if (!Environment.MEDIA_MOUNTED.equals(state)) {
+				throw new Exception("Media Unmounted!");
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+
+		return true;
+	}
 }
