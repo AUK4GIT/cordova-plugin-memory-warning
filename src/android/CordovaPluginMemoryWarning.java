@@ -65,9 +65,7 @@ public class CordovaPluginMemoryWarning extends CordovaPlugin {
         return false;
     }
     
-    private void getByteFreeExternalPath(CallbackContext callBackContext) {
-		ExternalStorage externalstorage = new ExternalStorage();
-        
+    private void getByteFreeExternalPath(CallbackContext callBackContext) {        
 		try {
             long spaceFreeByte = 0;
 
