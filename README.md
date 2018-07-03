@@ -37,4 +37,11 @@ cordova.plugins.CordovaPluginMemoryWarning.isMemoryUsageUnsafe(function (result)
 }, function (error) {
     // handle errors
 });
+
+// get Freespace available
+cordova.plugins.CordovaPluginMemoryWarning.getUsableSpace(function (sucesso) {
+        console.log("Free Space: " + sucesso + " bytes");
+      }, function (erro) {
+        console.log("There was a problem: " + erro);
+      });
 ```
